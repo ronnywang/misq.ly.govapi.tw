@@ -11,7 +11,7 @@ class Helper
         $content = curl_exec($curl);
         $info = curl_getinfo($curl);
         if ($info['http_code'] != 200) {
-            error("找不到這資料, $url (code={$info['http_code']})");
+            Helper::error("找不到這資料, $url (code={$info['http_code']})");
         }
         curl_close($curl);
         return $content;
