@@ -47,6 +47,14 @@ if ($_SERVER['REQUEST_URI'] == '/') {
     exit;
 }
 
+// 關係文書
+// http://lci.ly.gov.tw/LyLCEW/agenda1/02/word/09/02/14/LCEWA01_090214_00007.doc
+// http://lci.ly.gov.tw/LyLCEW/agenda1/02/pdf/09/02/14/LCEWA01_090214_00007.pdf
+if (preg_match('#^/LyLCEW/agenda1/([0-9]*)/(word|pdf)/([0-9]*)/([0-9]*)/([0-9]*)/LCEWA01_([0-9_]*).(doc|pdf)#', $_SERVER['REQUEST_URI'], $matches)) {
+    include('related.php');
+    exit;
+}
+
 header('HTTP/1.0 404 Not Found', true, 404);
 echo 404;
 exit;
