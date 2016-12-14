@@ -1,9 +1,28 @@
 <?php
 
-function error($message) {
-    echo json_encode(array('error' => true, 'message' => $message));
-    exit;
+class Helper
+{
+    public function fetch($url)
+    {
+        $agent = "misq.ly.govapi.tw by IP: {$_SERVER['REMOTE_ADDR']}";
+        $curl = curl_init($url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_USERAGENT, $agent);
+        $content = curl_exec($curl);
+        $info = curl_getinfo($curl);
+        if ($info['http_code'] != 200) {
+            error("找不到這資料, $url (code={$info['http_code']})");
+        }
+        curl_close($curl);
+        return $content;
+    }
+
+    public function error($message) {
+        echo json_encode(array('error' => true, 'message' => $message));
+        exit;
+    }
 }
+
 
 // /_static/...
 if (strpos($_SERVER['REQUEST_URI'], '/_static/')) {
