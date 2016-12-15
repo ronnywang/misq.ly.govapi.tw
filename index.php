@@ -91,6 +91,13 @@ if (preg_match('#^/listbill/(\d+)/(\d+)/(\d+)#', $_SERVER['REQUEST_URI'], $match
     exit;
 }
 
+// 會議查詢明細
+// /MISQ/IQuery/misq5000QueryMeetingDetail.action?
+if (strpos($_SERVER['REQUEST_URI'], '/MISQ/IQuery/misq5000QueryMeetingDetail.action?') === 0) {
+    include('meetingdetail.php');
+    exit;
+}
+
 // 關係文書
 // http://lci.ly.gov.tw/LyLCEW/agenda1/02/word/09/02/14/LCEWA01_090214_00007.doc
 // http://lci.ly.gov.tw/LyLCEW/agenda1/02/pdf/09/02/14/LCEWA01_090214_00007.pdf
