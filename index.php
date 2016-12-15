@@ -26,6 +26,19 @@ class Helper
         echo json_encode(array('error' => true, 'message' => $message));
         exit;
     }
+
+    public function url($path)
+    {
+        $ret = '';
+        if ($_SERVER['HTTPS']) {
+            $ret = 'https://';
+        } else {
+            $ret = 'http://';
+        }
+        $ret .= $_SERVER['HTTP_HOST'];
+        $ret .= $path;
+        return $ret;
+    }
 }
 
 
