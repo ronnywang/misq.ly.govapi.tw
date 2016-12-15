@@ -4,6 +4,16 @@ class Helper
 {
     public function fetch($url, $options = array())
     {
+        $cache_key = $url;
+        if (array_key_exists('post_params', $options)) {
+            $cache_key .= 'POST' . json_encode($options['post_params']);
+        }
+
+        $cache_file = "/tmp/misq-cache-" . crc32($cache_key);
+        if (array_key_exists('cache', $options) and file_exists($cache_file) and time() - filectime($cache_file) < intval($options['cache'])) {
+            return file_get_contents($cache_file);
+        }
+
         $agent = "misq.ly.govapi.tw by IP: {$_SERVER['REMOTE_ADDR']}";
         $curl = curl_init($url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -19,6 +29,9 @@ class Helper
             Helper::error("找不到這資料, $url (code={$info['http_code']})");
         }
         curl_close($curl);
+        if (array_key_exists('cache', $options)) {
+            file_put_contents($cache_file, $content);
+        }
         return $content;
     }
 
