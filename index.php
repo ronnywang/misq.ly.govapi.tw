@@ -78,6 +78,12 @@ if ($_SERVER['REQUEST_URI'] == '/') {
     exit;
 }
 
+// 院會列表
+if ('/listmeeting' == $_SERVER['REQUEST_URI']) {
+    include('listmeeting.php');
+    exit;
+}
+
 // 提案列表
 if (preg_match('#^/listbill/(\d+)/(\d+)/(\d+)#', $_SERVER['REQUEST_URI'], $matches)) {
     list(, $term, $session_period, $session_times) = $matches;
