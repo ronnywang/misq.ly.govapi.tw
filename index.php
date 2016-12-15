@@ -94,7 +94,13 @@ if (preg_match('#^/listbill/(\d+)/(\d+)/(\d+)#', $_SERVER['REQUEST_URI'], $match
 // 關係文書
 // http://lci.ly.gov.tw/LyLCEW/agenda1/02/word/09/02/14/LCEWA01_090214_00007.doc
 // http://lci.ly.gov.tw/LyLCEW/agenda1/02/pdf/09/02/14/LCEWA01_090214_00007.pdf
+// http://lis.ly.gov.tw/lylgqrc/mtcdoc?DN090215:LCEWA01_090215_00008
 if (preg_match('#^/LyLCEW/agenda1/([0-9]*)/(word|pdf)/([0-9]*)/([0-9]*)/([0-9]*)/LCEWA01_([0-9_]*).(doc|pdf)#', $_SERVER['REQUEST_URI'], $matches)) {
+    $url = sprintf("http://lci.ly.gov.tw/LyLCEW/agenda1/%s/word/%s/%s/%s/LCEWA01_%s.doc", $matches[1], $matches[3], $matches[4], $matches[5], $matches[6]);
+    include('related.php');
+    exit;
+} elseif (strpos($_SERVER['REQUEST_URI'], '/lylgqrc/mtcdoc?') === 0) {
+    $url = 'http://lis.ly.gov.tw' . $_SERVER['REQUEST_URI'];
     include('related.php');
     exit;
 }

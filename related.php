@@ -1,6 +1,5 @@
 <?php
 
-$url = sprintf("http://lci.ly.gov.tw/LyLCEW/agenda1/%s/word/%s/%s/%s/LCEWA01_%s.doc", $matches[1], $matches[3], $matches[4], $matches[5], $matches[6]);
 $cache_file = "/tmp/misq-cache-" . md5($url);
 if (!file_exists($cache_file)) {
     file_put_contents($cache_file . '.doc', Helper::fetch($url));
