@@ -1,6 +1,6 @@
 <?php
 
-$url = 'http://misq.ly.gov.tw/MISQ//IQuery/misq5000QueryMeeting.action?queryCondition=0703';
+$url = 'http://misq.ly.gov.tw/MISQ/IQuery/misq5000QueryMeeting.action?queryCondition=0703';
 $content = Helper::fetch($url, array('cache' => 86400));
 $doc = new DOMDocument;
 @$doc->loadHTML($content);
