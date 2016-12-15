@@ -2,11 +2,16 @@
 
 class Helper
 {
-    public function fetch($url)
+    public function fetch($url, $options = array())
     {
         $agent = "misq.ly.govapi.tw by IP: {$_SERVER['REMOTE_ADDR']}";
         $curl = curl_init($url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        if (array_key_exists('post_params', $options)) {
+            curl_setopt($curl, CURLOPT_POSTFIELDS, implode('&', array_map(function($k) use ($options) {
+                return urlencode($k) . '=' . urlencode($options['post_params'][$k]);
+            }, array_keys($options['post_params']))));
+        }
         curl_setopt($curl, CURLOPT_USERAGENT, $agent);
         $content = curl_exec($curl);
         $info = curl_getinfo($curl);
