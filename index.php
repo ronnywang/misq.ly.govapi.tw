@@ -43,7 +43,7 @@ class Helper
     public function url($path)
     {
         $ret = '';
-        if ($_SERVER['HTTPS']) {
+        if (array_key_exists('HTTPS', $_SERVER) and $_SERVER['HTTPS']) {
             $ret = 'https://';
         } else {
             $ret = 'http://';
