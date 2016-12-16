@@ -36,7 +36,7 @@ foreach ($doc->getElementsByTagName('div') as $div_dom) {
         $ret[] = array(
             'billno' => $billno,
             'desc' => trim($a_dom->nodeValue),
-            'api' => Helper::url('/billdetail/' . $billno),
+            'api' => Helper::url("/MISQ/IQuery/misq5000QueryBillDetail.action?billNo=" . urlencode($billno)),
         );
     }
 }
