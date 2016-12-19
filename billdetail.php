@@ -87,5 +87,4 @@ foreach ($doc->getElementById('table')->getElementsByTagName('tr') as $tr_dom) {
     }
 }
 
-header('Content-Type: application/json');
-echo json_encode($obj);
+Helper::json($obj);

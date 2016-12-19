@@ -30,4 +30,5 @@ foreach ($doc->getElementsByTagName('a') as $a_dom) {
     $ret['會議'][$meet_id]['時間'][] = trim($a_dom->parentNode->parentNode->getElementsByTagName('td')->item(0)->nodeValue);
 }
 $ret['會議'] = array_values($ret['會議']);
-echo json_encode($ret, JSON_UNESCAPED_UNICODE);
+
+Helper::json($ret);

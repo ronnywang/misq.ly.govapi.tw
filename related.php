@@ -205,5 +205,5 @@ while ($p_dom = array_shift($p_doms)) {
         exit;
     }
 }
-header('Content-Type: application/json');
-echo json_encode($obj);
+
+Helper::json($obj);

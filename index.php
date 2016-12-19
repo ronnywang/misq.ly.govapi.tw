@@ -36,7 +36,7 @@ class Helper
     }
 
     public function error($message) {
-        echo json_encode(array('error' => true, 'message' => $message));
+        self::json(array('error' => true, 'message' => $message));
         exit;
     }
 
@@ -51,6 +51,15 @@ class Helper
         $ret .= $_SERVER['HTTP_HOST'];
         $ret .= $path;
         return $ret;
+    }
+
+    public function json($obj)
+    {
+        header('Content-Type: application/json');
+        header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Allow-Methods: GET');
+        echo json_encode($obj, JSON_UNESCAPED_UNICODE);
+        exit;
     }
 }
 

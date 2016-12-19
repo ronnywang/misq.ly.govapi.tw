@@ -40,5 +40,5 @@ foreach ($doc->getElementsByTagName('div') as $div_dom) {
         );
     }
 }
-header('Content-Type: application/json');
-echo json_encode($ret);
+
+Helper::json($ret);

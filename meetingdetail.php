@@ -43,5 +43,4 @@ foreach ($doc->getElementById('queryForm')->getElementsByTagName('tr') as $tr_do
     }
 }
 
-header('Content-Type: application/json');
-echo json_encode($obj);
+Helper::json($obj);
