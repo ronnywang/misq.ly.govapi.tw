@@ -64,7 +64,7 @@ foreach ($doc->getElementsByTagName('a') as $a_dom) {
             sprintf("/MISQ/IQuery/misq5000QueryMeetingDetail.action?meetingNo=%s&meetingTime=%s&departmentCode=%s", urlencode($detail_matches[1]), urlencode($detail_matches[2]), urlencode($detail_matches[3]))
         );
     }
-    $ret['會議'][$meet_id]['時間'][] = trim($a_dom->parentNode->parentNode->getElementsByTagName('td')->item(0)->nodeValue);
+    $ret['會議'][$meet_id]['時間'][] = Helper::parseMeetTime($a_dom->parentNode->parentNode->getElementsByTagName('td')->item(0)->nodeValue);
 }
 $ret['會議'] = array_values($ret['會議']);
 
