@@ -35,7 +35,7 @@ foreach ($doc->getElementById('queryForm')->getElementsByTagName('tr') as $tr_do
                 foreach ($tr_dom->getElementsByTagName('a') as $a_dom) {
                     if (preg_match("#queryDetail\('([^']*)'\)#", $a_dom->getAttribute('onclick'), $matches)) {
                         $case->bill_no = $matches[1];
-                        $case->{'描述'} = trim($a_dom->nodeValue);
+                        $case->{'描述'} = preg_replace('#\s+#', '', trim($a_dom->nodeValue));
                         $case->{'議案API'} = Helper::url("/MISQ/IQuery/misq5000QueryBillDetail.action?billNo=" . urlencode($case->bill_no));
                     } elseif (strpos($a_dom->getAttribute('href'), 'http://lci.ly.gov.tw/') === 0 and trim($a_dom->nodeValue) === '關係文書') {
                         $case->{'關係文書API'} = Helper::url(str_replace("http://lci.ly.gov.tw", "", $a_dom->getAttribute('href')));
