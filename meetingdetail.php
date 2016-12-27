@@ -14,7 +14,13 @@ foreach ($doc->getElementById('queryForm')->getElementsByTagName('tr') as $tr_do
     $td_dom = $tr_dom->getElementsByTagName('td')->item(0);
     $key = explode('：', $th_doms->item(0)->nodeValue)[0];
     if ($key == '會議時間') {
-        $obj->{$key} = preg_split("#\s+#", trim($td_dom->nodeValue));
+        $obj->{$key} = array_map(array('Helper', 'parseMeetTime'), preg_split("#\s+#", trim($td_dom->nodeValue)));
+    } elseif ($key == '出席委員') {
+        $persons = array();
+        foreach ($td_dom->getElementsByTagName('a') as $a_dom) {
+            $persons[] = preg_replace('#　*$#u', '', $a_dom->nodeValue);
+        }
+        $obj->{$key} = $persons;
     } elseif ($key == '關係文書') {
         $obj->{$key} = new StdClass;
         foreach ($td_dom->getElementsByTagName('a') as $a_dom) {
