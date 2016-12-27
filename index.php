@@ -53,6 +53,24 @@ class Helper
         return $ret;
     }
 
+    public function parseMeetTime($str)
+    {
+        // 99/10/26  09:00-18:00
+        $str = trim($str);
+        
+        $ret = array(
+            'str' => $str,
+        );
+
+        if (!preg_match('#^(\d+)/(\d+)/(\d+)[^0-9]*(\d+:\d+)-(\d+:\d+)$#', trim($str), $matches)) {
+            return $ret;
+        }
+        $ret['日期'] = sprintf("%d/%02d/%02d", $matches[1] + 1911, $matches[2], $matches[3]);
+        $ret['開始時間'] = $matches[4];
+        $ret['結束時間'] = $matches[4];
+        return $ret;
+    }
+
     public function json($obj)
     {
         header('Content-Type: application/json');
