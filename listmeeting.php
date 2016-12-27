@@ -13,15 +13,52 @@ foreach ($doc->getElementsByTagName('a') as $a_dom) {
         continue;
     }
     $title = $a_dom->getAttribute('title');
-    preg_match('#第(\d+)屆第(\d+)會期第(\d+)次會議(.*)#', $title, $matches);
-    $meet_id = implode(',', array($matches[1], $matches[2], $matches[3]));
+    if (preg_match('#第(\d+)屆第(\d+)會期第(\d+)次會議(.*)#', $title, $matches)) {
+        $meet_id = implode(',', array('院會', $matches[1], $matches[2], $matches[3]));
+        $val = array(
+            '類別' => '院會',
+            '屆次' => intval($matches[1]),
+            '會期' => intval($matches[2]),
+            '會次' => intval($matches[3]),
+            '事由' => trim($matches[4]),
+        );
+    } elseif (preg_match('#第(\d+)屆第(\d+)會期第(\d+)次全院委員會?會議(.*)#u', $title, $matches)) {
+        $meet_id = implode(',', array('全院', $matches[1], $matches[2], $matches[3]));
+        $val = array(
+            '類別' => '全院委員會議',
+            '屆次' => intval($matches[1]),
+            '會期' => intval($matches[2]),
+            '會次' => intval($matches[3]),
+            '事由' => trim($matches[4]),
+        );
+    } elseif (preg_match('#第(\d+)屆第(\d+)會期第(\d+)次臨時會第(\d+)次會議(.*)#', $title, $matches)) {
+        $meet_id = implode(',', array('全院', $matches[1], $matches[2], $matches[3]));
+        $val = array(
+            '類別' => '臨時會',
+            '屆次' => intval($matches[1]),
+            '會期' => intval($matches[2]),
+            '臨時會次' => intval($matches[3]),
+            '會次' => intval($matches[4]),
+            '事由' => trim($matches[5]),
+        );
+    } elseif (preg_match('#第(\d+)屆第(\d+)會期第(\d+)次臨時會第(\d+)次全院委員會會議(.*)#', $title, $matches)) {
+        $meet_id = implode(',', array('全院', $matches[1], $matches[2], $matches[3]));
+        $val = array(
+            '類別' => '臨時會全院委員會會議',
+            '屆次' => intval($matches[1]),
+            '會期' => intval($matches[2]),
+            '臨時會次' => intval($matches[3]),
+            '會次' => intval($matches[4]),
+            '事由' => trim($matches[5]),
+        );
+    } else {
+        error_log("unknown title: $title");
+        continue;
+    }
+
     if (!array_key_exists($meet_id, $ret['會議'])) {
         preg_match("#queryDetail\('([^']*)','([^']*)','([^']*)'\)#", $a_dom->getAttribute('onclick'), $detail_matches);
-        $ret['會議'][$meet_id] = array();
-        $ret['會議'][$meet_id]['屆次'] = intval($matches[1]);
-        $ret['會議'][$meet_id]['會期'] = intval($matches[2]);
-        $ret['會議'][$meet_id]['會次'] = intval($matches[3]);
-        $ret['會議'][$meet_id]['事由'] = $matches[4];
+        $ret['會議'][$meet_id] = $val;
         $ret['會議'][$meet_id]['時間'] = array();
         $ret['會議'][$meet_id]['api'] = Helper::url(
             sprintf("/MISQ/IQuery/misq5000QueryMeetingDetail.action?meetingNo=%s&meetingTime=%s&departmentCode=%s", urlencode($detail_matches[1]), urlencode($detail_matches[2]), urlencode($detail_matches[3]))
