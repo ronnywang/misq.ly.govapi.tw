@@ -23,7 +23,7 @@ foreach ($doc->getElementsByTagName('a') as $a_dom) {
             '事由' => trim($matches[4]),
         );
     } elseif (preg_match('#第(\d+)屆第(\d+)會期第(\d+)次全院委員會?會議(.*)#u', $title, $matches)) {
-        $meet_id = implode(',', array('全院', $matches[1], $matches[2], $matches[3]));
+        $meet_id = implode(',', array('全院委員會議', $matches[1], $matches[2], $matches[3]));
         $val = array(
             '類別' => '全院委員會議',
             '屆次' => intval($matches[1]),
@@ -32,7 +32,7 @@ foreach ($doc->getElementsByTagName('a') as $a_dom) {
             '事由' => trim($matches[4]),
         );
     } elseif (preg_match('#第(\d+)屆第(\d+)會期第(\d+)次臨時會第(\d+)次會議(.*)#', $title, $matches)) {
-        $meet_id = implode(',', array('全院', $matches[1], $matches[2], $matches[3]));
+        $meet_id = implode(',', array('臨時會', $matches[1], $matches[2], $matches[3]));
         $val = array(
             '類別' => '臨時會',
             '屆次' => intval($matches[1]),
@@ -42,7 +42,7 @@ foreach ($doc->getElementsByTagName('a') as $a_dom) {
             '事由' => trim($matches[5]),
         );
     } elseif (preg_match('#第(\d+)屆第(\d+)會期第(\d+)次臨時會第(\d+)次全院委員會會議(.*)#', $title, $matches)) {
-        $meet_id = implode(',', array('全院', $matches[1], $matches[2], $matches[3]));
+        $meet_id = implode(',', array('臨時會全院委員會會議', $matches[1], $matches[2], $matches[3]));
         $val = array(
             '類別' => '臨時會全院委員會會議',
             '屆次' => intval($matches[1]),
