@@ -1,6 +1,6 @@
 <?php
 
-$url = "http://misq.ly.gov.tw" . $_SERVER['REQUEST_URI'];
+$url = "https://misq.ly.gov.tw" . $_SERVER['REQUEST_URI'];
 $obj = new StdClass;
 $obj->{'來源'} = $url;
 $content = Helper::fetch($url, array('cache' => 86400));
